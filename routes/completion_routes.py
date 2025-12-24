@@ -4,6 +4,7 @@ from utils.email_sender import send_email
 from utils.sheet_logger import log_to_sheet_async
 from utils.cert_utils import generate_certificate_number
 from io import BytesIO
+import threading
 
 completion_bp = Blueprint('completion', __name__)
 
@@ -41,7 +42,12 @@ def generate_completion():
     # Send email if online
     if request.form.get('cert-type') == 'online':
         pdf_copy = BytesIO(pdf_buffer.getvalue())
-        send_email(name, email, pdf_copy, filename)
+
+        threading.Thread(
+            target=send_email,
+            args=(name, email, pdf_copy, filename),
+            daemon=True
+        ).start()
 
     return send_file(
         pdf_buffer,
