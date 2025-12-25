@@ -24,7 +24,7 @@ def generate_completion_pdf(name, domain, start_date, end_date, duration, regno)
     pdf.cell(50, 8, txt=f"DATE: {current_date}", align='R')
 
     # ---------------- Pronoun ----------------
-    pronoun = 'Her' if name.strip().split()[0].lower().endswith(('a', 'i')) else 'His'
+    pronoun = 'This'
 
     # ---------------- BODY TEXT ----------------
     pdf.set_font("Arial", '', 13)
